@@ -12,6 +12,8 @@ function App() {
 
   const [searchValue, setSearchValue] = useState('');
 
+  const [favorites, setFavorites] = useState([]);
+
   const getMoviesRequest = async (searchValue) => {
 
     const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=2c0c3957`;
@@ -30,6 +32,15 @@ function App() {
 
   },[searchValue]);
 
+
+
+  const AddFavoriteMovie = (movies) => {
+
+    const newFavoriteList = [...favorites, movies];
+    setFavorites(newFavoriteList);
+
+  } 
+
   return (
     <div className="container-fluid movie-app">
 
@@ -43,8 +54,24 @@ function App() {
         <MovieList 
         
             movies = {movies}
+            handleFavoritesClick = {AddFavoriteMovie}
+            favoriteComponent= {AddFavorites}
         />
       </div>
+
+      <div className='row d-flex align-items-center mt-4 mb-4'>
+         <MovieListHeading heading="Favorites"/>
+      </div>
+
+      <div className='row'>
+        <MovieList 
+
+          movies = {favorites}
+          
+        
+        />
+      </div>
+
     </div>
   );
 }
